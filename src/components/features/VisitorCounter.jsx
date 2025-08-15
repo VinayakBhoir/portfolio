@@ -1,5 +1,6 @@
 import { useVisitorCount } from '../../hooks/useVisitorCount';
 import { useState, useEffect } from 'react';
+import { useAchievements } from '../../contexts/AchievementContext';
 
 const VisitorCounter = () => {
     const {
@@ -23,6 +24,7 @@ const VisitorCounter = () => {
 
     const [displayCount, setDisplayCount] = useState(0);
     const [isAnimatingCount, setIsAnimatingCount] = useState(false);
+    const { unlockAchievement, unlockedAchievements } = useAchievements(); // Add this line
 
     // Animate counter numbers
     useEffect(() => {
@@ -44,6 +46,17 @@ const VisitorCounter = () => {
             return () => clearInterval(timer);
         }
     }, [count, displayCount]);
+
+    // Trigger Early Bird achievement
+    useEffect(() => {
+        // 🔄 Change this number to set your new trigger limit (e.g., 100 for first 100 visitors)
+        const EARLY_BIRD_LIMIT = 11;
+
+        // Only unlock if count is valid, within limit, and not already unlocked
+        if (count > 0 && count <= EARLY_BIRD_LIMIT && !unlockedAchievements.has('earlyBird')) {
+            unlockAchievement('earlyBird');
+        }
+    }, [count, unlockedAchievements, unlockAchievement]);
 
     if (loading || !showCounter) {
         return null;
@@ -188,7 +201,7 @@ const VisitorCounter = () => {
                                 </span>
                             )}
                             {visitCount > 5 && !isNewVisitor && (
-                                <span className="text-xs bg-gold-500 text-white px-2 py-1 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500">
+                                <span className="text-xs text-white px-2 py-1 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500">
                                     👑 VIP Visitor
                                 </span>
                             )}

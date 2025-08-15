@@ -26,7 +26,7 @@ const achievements = {
     earlyBird: {
         id: 'earlyBird',
         name: '🐦 Early Bird',
-        description: 'One of the first 50 visitors!',
+        description: 'One of the first 50 visitors!',  
         rarity: 'epic'
     }
 };
@@ -157,7 +157,6 @@ const AchievementToast = ({ achievement }) => {
     );
 };
 
-
 // Achievement Counter Component with corrected tooltip positioning
 export const AchievementCounter = () => {
     const { unlockedAchievements } = useAchievements();
@@ -176,9 +175,9 @@ export const AchievementCounter = () => {
                         {unlockedAchievements.size}
                     </span>
                     <span className="text-[var(--text-muted)]">/</span>
-                    <span className="text-[var(--text-secondary)]">3</span>
+                    <span className="text-[var(--text-secondary)]">{Object.keys(achievements).length}</span> 
                 </div>
-                {unlockedAchievements.size === 3 && (
+                {unlockedAchievements.size === Object.keys(achievements).length && (
                     <span className="text-xs text-[var(--accent-primary)] animate-pulse">
                         🎊 Complete!
                     </span>
@@ -193,7 +192,7 @@ export const AchievementCounter = () => {
                         <div className="text-[var(--text-secondary)] text-xs space-y-1">
                             <div>🕹️ Try the Konami code</div>
                             <div>🎨 Explore all themes</div>
-                            <div>🐦 Be an early visitor</div>
+                            <div>🐦 Be an early visitor</div> 
                         </div>
                     </div>
                     {/* Tooltip arrow pointing up */}
