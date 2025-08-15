@@ -1,0 +1,31 @@
+{
+    "functions": {
+        "api/**/*.js": {
+            "runtime": "nodejs18.x",
+            "maxDuration": 10
+        }
+    },
+    "env": {
+        "SUPABASE_URL": "@supabase-url",
+        "SUPABASE_ANON_KEY": "@supabase-anon-key"
+    },
+    "headers": [
+        {
+            "source": "/api/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "*"
+                },
+                {
+                    "key": "Access-Control-Allow-Methods",
+                    "value": "GET, OPTIONS"
+                },
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "Content-Type"
+                }
+            ]
+        }
+    ]
+}
