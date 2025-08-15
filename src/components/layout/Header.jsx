@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navigation from './Navigation';
 import ThemeSelector from '../features/ThemeSelector';
+import { AchievementCounter } from '../../contexts/AchievementContext';
 import { personalInfo } from '../../data/personalInfo';
 
 const Header = () => {
@@ -36,12 +37,12 @@ const Header = () => {
     return (
         <>
             <header className={`
-        fixed top-0 left-0 right-0 z-40 transition-all duration-200 ease-out
-        ${isScrolled
+                fixed top-0 left-0 right-0 z-40 transition-all duration-200 ease-out
+                ${isScrolled
                     ? 'bg-[var(--bg-primary)]/80 backdrop-blur-md border-b border-[var(--border-primary)]/50 shadow-sm'
                     : 'bg-transparent'
                 }
-      `}>
+            `}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         {/* Logo */}
@@ -57,11 +58,13 @@ const Header = () => {
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center space-x-6">
                             <Navigation />
+                            <AchievementCounter />
                             <ThemeSelector />
                         </div>
 
                         {/* Mobile menu button */}
                         <div className="md:hidden flex items-center space-x-4">
+                            <AchievementCounter />
                             <ThemeSelector />
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -84,9 +87,9 @@ const Header = () => {
 
             {/* Mobile Navigation Overlay */}
             <div className={`
-        fixed inset-0 z-50 lg:hidden transition-all duration-200 ease-out
-        ${isMobileMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}
-      `}>
+                fixed inset-0 z-50 lg:hidden transition-all duration-200 ease-out
+                ${isMobileMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}
+            `}>
                 {/* Backdrop */}
                 <div
                     className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-200 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
@@ -96,11 +99,11 @@ const Header = () => {
 
                 {/* Menu Panel */}
                 <nav className={`
-          absolute right-0 top-0 h-full w-80 max-w-sm 
-          bg-[var(--bg-card)] border-l border-[var(--border-primary)]
-          shadow-2xl transform transition-transform duration-200 ease-out
-          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-        `}>
+                    absolute right-0 top-0 h-full w-80 max-w-sm 
+                    bg-[var(--bg-card)] border-l border-[var(--border-primary)]
+                    shadow-2xl transform transition-transform duration-200 ease-out
+                    ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+                `}>
                     <div className="p-6">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-lg font-semibold text-[var(--text-primary)]">
@@ -116,10 +119,21 @@ const Header = () => {
                             </button>
                         </div>
 
+                        {/* Navigation */}
                         <Navigation
                             mobile
                             onItemClick={() => setIsMobileMenuOpen(false)}
                         />
+
+                        {/* Mobile Achievement Counter (larger display) */}
+                        <div className="mt-8 pt-6 border-t border-[var(--border-primary)]">
+                            <div className="flex items-center justify-center">
+                                <div className="text-center">
+                                    <div className="text-sm text-[var(--text-muted)] mb-2">Achievements</div>
+                                    <AchievementCounter />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </nav>
             </div>

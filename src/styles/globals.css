@@ -638,3 +638,126 @@ button:focus-visible {
     transform: scale(1.15);
     box-shadow: 0 0 15px var(--accent-glow)/60;
 }
+
+/* Add this to your existing globals.css file */
+
+/* Retro Mode Styles */
+.retro-mode {
+    font-family: 'Courier New', monospace !important;
+}
+
+.retro-mode * {
+    font-family: 'Courier New', monospace !important;
+    image-rendering: pixelated !important;
+    image-rendering: -moz-crisp-edges !important;
+    image-rendering: crisp-edges !important;
+}
+
+.retro-mode .gradient-text {
+    background: #00FF00 !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 0 10px #00FF00 !important;
+}
+
+.retro-mode img {
+    filter: contrast(150%) saturate(200%) hue-rotate(90deg) !important;
+}
+
+@keyframes retro-blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.retro-mode .animate-pulse {
+    animation: retro-blink 1s infinite !important;
+}
+
+/* Retro mode cursor override */
+.retro-mode .cursor-dot {
+    background: #00FF00 !important;
+    box-shadow: 0 0 10px #00FF00 !important;
+}
+
+.retro-mode .cursor-ring {
+    border-color: #00FF00 !important;
+    box-shadow: 0 0 20px #00FF00 !important;
+}
+
+/* Retro mode console */
+.retro-mode .developer-console {
+    background: #000000 !important;
+    border-color: #00FF00 !important;
+    color: #00FF00 !important;
+}
+
+/* Achievement toast animation */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-slideInUp {
+    animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Publications card specific hover effects */
+.publication-card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--accent-primary)/20;
+}
+
+.publication-card-hover:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--accent-primary);
+    box-shadow:
+        0 15px 50px var(--accent-glow)/20,
+        0 0 20px var(--accent-glow)/30,
+        0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Pulse animation for IEEE badge */
+@keyframes ieee-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.8), 0 0 30px rgba(255, 193, 7, 0.6);
+    }
+}
+
+/* Tooltip fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.2s ease-out;
+}

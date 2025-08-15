@@ -1,9 +1,18 @@
 import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
+import { useAchievements } from '../../contexts/AchievementContext';
 
 const ThemeSelector = () => {
     const { themes, currentTheme, changeTheme } = useTheme();
+    const { trackThemeUsage } = useAchievements();
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleThemeChange = (key) => {
+        console.log('🎨 Theme changed to:', key);
+        changeTheme(key);
+        trackThemeUsage(key);  // This will track for achievements
+        setIsOpen(false);
+    };
 
     return (
         <div className="relative">
@@ -32,13 +41,10 @@ const ThemeSelector = () => {
                                 {Object.entries(themes).map(([key, theme]) => (
                                     <button
                                         key={key}
-                                        onClick={() => {
-                                            changeTheme(key);
-                                            setIsOpen(false);
-                                        }}
+                                        onClick={() => handleThemeChange(key)}
                                         className={`w-8 h-8 rounded-full border-2 transition-all duration-200 ${currentTheme === key
-                                                ? 'border-white scale-110'
-                                                : 'border-gray-600 hover:scale-105'
+                                            ? 'border-white scale-110'
+                                            : 'border-gray-600 hover:scale-105'
                                             }`}
                                         style={{ backgroundColor: theme.primary }}
                                         title={theme.name}

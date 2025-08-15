@@ -1,30 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { navigationItems } from '../../utils/constants';
 
 const Navigation = ({ mobile = false, onItemClick }) => {
     const [activeSection, setActiveSection] = useState('home');
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const sections = navigationItems.map(item => item.id);
-            const scrollPosition = window.scrollY + 100;
+    // Memoized scroll handler
+    const handleScroll = useCallback(() => {
+        const sections = navigationItems.map(item => item.id);
+        const scrollPosition = window.scrollY + 100;
 
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = document.getElementById(sections[i]);
-                if (section && section.offsetTop <= scrollPosition) {
-                    setActiveSection(sections[i]);
-                    break;
-                }
+        for (let i = sections.length - 1; i >= 0; i--) {
+            const section = document.getElementById(sections[i]);
+            if (section && section.offsetTop <= scrollPosition) {
+                setActiveSection(sections[i]);
+                break;
             }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        }
     }, []);
 
-    const handleClick = (e, href, id) => {
-        e.preventDefault();
+    useEffect(() => {
+        // Initial call
+        handleScroll();
 
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [handleScroll]); // Stable dependency
+
+    const handleClick = useCallback((e, href, id) => {
+        e.preventDefault();
         const element = document.getElementById(id);
         if (element) {
             const headerOffset = 80;
@@ -36,9 +39,8 @@ const Navigation = ({ mobile = false, onItemClick }) => {
                 behavior: 'smooth'
             });
         }
-
         if (onItemClick) onItemClick();
-    };
+    }, [onItemClick]);
 
     const baseClasses = mobile
         ? "block w-full text-left px-4 py-3 rounded-lg transition-all duration-200"
@@ -54,8 +56,7 @@ const Navigation = ({ mobile = false, onItemClick }) => {
                     key={item.id}
                     href={item.href}
                     onClick={(e) => handleClick(e, item.href, item.id)}
-                    className={`${baseClasses} ${activeSection === item.id ? activeClasses : inactiveClasses
-                        }`}
+                    className={`${baseClasses} ${activeSection === item.id ? activeClasses : inactiveClasses}`}
                 >
                     {item.label}
                 </a>

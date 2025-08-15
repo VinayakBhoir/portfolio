@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import Button from '../ui/Button';
 import { personalInfo } from '../../data/personalInfo';
+import { useParallax } from '../../hooks/useParallax';
 
 const Hero = () => {
     const [displayText, setDisplayText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
+    const parallaxOffset = useParallax(0.3);
     const roles = ['Full-Stack Developer', 'AI Researcher', 'Problem Solver', 'Tech Enthusiast'];
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -31,6 +34,7 @@ const Hero = () => {
         return () => clearInterval(typeInterval);
     }, [currentIndex]);
 
+
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -48,13 +52,22 @@ const Hero = () => {
     return (
         <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
             {/* Simplified Animated Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: `radial-gradient(circle at 25% 25%, var(--accent-primary) 2px, transparent 2px),
-                           radial-gradient(circle at 75% 75%, var(--accent-primary) 1px, transparent 1px)`,
-                    backgroundSize: '60px 60px',
-                    opacity: 0.1
-                }}></div>
+            <div
+                className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]"
+                style={{
+                    transform: `translate3d(0, ${parallaxOffset}px, 0)`
+                }}
+            >
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 25% 25%, var(--accent-primary) 2px, transparent 2px),
+                                           radial-gradient(circle at 75% 75%, var(--accent-primary) 1px, transparent 1px)`,
+                        backgroundSize: '60px 60px',
+                        opacity: 0.1,
+                        transform: `translate3d(0, ${parallaxOffset * 0.5}px, 0)`
+                    }}
+                />
             </div>
 
             <div className="section-container relative z-10">

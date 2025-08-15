@@ -1,8 +1,15 @@
-import { socialLinks } from '../../utils/constants';
-import { personalInfo } from '../../data/personalInfo';
+import { socialLinks } from "../../utils/constants";
+import { personalInfo } from "../../data/personalInfo";
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
 
     return (
         <footer className="bg-[var(--bg-secondary)] border-t border-[var(--border-primary)] py-12">
@@ -27,18 +34,10 @@ const Footer = () => {
                             Quick Links
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
-                            <a href="#about" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">
-                                About
-                            </a>
-                            <a href="#projects" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">
-                                Projects
-                            </a>
-                            <a href="#experience" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">
-                                Experience
-                            </a>
-                            <a href="#contact" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">
-                                Contact
-                            </a>
+                            <a href="#about" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">About</a>
+                            <a href="#projects" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">Projects</a>
+                            <a href="#experience" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">Experience</a>
+                            <a href="#contact" className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors duration-200">Contact</a>
                         </div>
                     </div>
 
@@ -77,8 +76,31 @@ const Footer = () => {
                     </div>
                 </div>
 
+                {/* Back to Top with Bounce and Hover Color */}
+                <div className="mt-12 flex flex-col items-center space-y-1">
+                    <button
+                        onClick={scrollToTop}
+                        className="flex flex-col items-center group"
+                        aria-label="Back to Top"
+                    >
+                        <svg
+                            className="w-8 h-8 animate-bounce text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] group-hover:scale-125 transition-all duration-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19V6m0 0l-7 7m7-7l7 7" />
+                        </svg>
+                        <span className="text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] text-sm animate-bounce delay-100 transition-colors duration-300">
+                            Back to top
+                        </span>
+                    </button>
+                </div>
+
+
+
                 {/* Bottom Bar */}
-                <div className="mt-8 pt-8 border-t border-[var(--border-primary)] flex flex-col md:flex-row justify-between items-center">
+                <div className="mt-6 pt-6 border-t border-[var(--border-primary)] flex flex-col md:flex-row justify-between items-center">
                     <p className="text-[var(--text-muted)] text-sm">
                         © {currentYear} {personalInfo.name}. All rights reserved.
                     </p>
@@ -108,7 +130,7 @@ const SocialIcon = ({ name }) => {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-        )
+        ),
     };
 
     return icons[name] || null;
