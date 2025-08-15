@@ -53,10 +53,10 @@ const VisitorCounter = () => {
         const EARLY_BIRD_LIMIT = 11;
 
         // Only unlock if count is valid, within limit, and not already unlocked
-        if (count > 0 && count <= EARLY_BIRD_LIMIT && !unlockedAchievements.has('earlyBird')) {
+        if (visitCount === PERSONAL_VISIT_TRIGGER && !unlockedAchievements.has('earlyBird')) {
             unlockAchievement('earlyBird');
         }
-    }, [count, unlockedAchievements, unlockAchievement]);
+    }, [visitCount, unlockedAchievements, unlockAchievement]);
 
     if (loading || !showCounter) {
         return null;

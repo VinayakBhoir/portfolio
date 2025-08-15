@@ -25,8 +25,8 @@ const achievements = {
     },
     earlyBird: {
         id: 'earlyBird',
-        name: '🐦 Early Bird',
-        description: 'One of the first 50 visitors!',  
+        name: '🔄 Loyal Visitor',  // 🔄 Updated title to better fit per-user repeat visits (change if needed)
+        description: 'Visited the site 11 times!',  // 🔄 Updated to per-user milestone (change the number if you adjust the trigger)
         rarity: 'epic'
     }
 };
@@ -192,7 +192,7 @@ export const AchievementCounter = () => {
                         <div className="text-[var(--text-secondary)] text-xs space-y-1">
                             <div>🕹️ Try the Konami code</div>
                             <div>🎨 Explore all themes</div>
-                            <div>🐦 Be an early visitor</div> 
+                            <div>🔄 Visited 11 times</div>  // 🔄 Updated tooltip text to match new description
                         </div>
                     </div>
                     {/* Tooltip arrow pointing up */}

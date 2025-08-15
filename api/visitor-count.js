@@ -64,10 +64,10 @@ export default async function handler(req, res) {
             }
         }
 
-        // Enhanced geolocation data
-        const country = req.headers['x-vercel-ip-country'] || 'Unknown';
-        const countryCode = req.headers['x-vercel-ip-country-region'] || 'XX';
-        const region = req.headers['x-vercel-ip-region'] || '';
+        // Enhanced geolocation data (FIXED: Correct mapping for country and code)
+        const countryCode = req.headers['x-vercel-ip-country'] || 'XX';  // 🔄 Fixed: ISO-2 country code
+        const region = req.headers['x-vercel-ip-country-region'] || '';
+        const country = req.headers['x-vercel-ip-country'] ? req.headers['x-vercel-ip-country'] : 'Unknown';  // 🔄 Use code for name if needed
         const city = req.headers['x-vercel-ip-city'] || '';
 
         // Enhanced privacy hashing
@@ -86,6 +86,7 @@ export default async function handler(req, res) {
         let isNewVisitor = false;
         let isReturningToday = false;
         let daysSinceLastVisit = 0;
+        let effectiveVisitCount = 1;  // 🔄 New: Track the post-increment value
 
         if (!existingVisitor && selectError?.code === 'PGRST116') {
             // New visitor - insert record
@@ -105,6 +106,7 @@ export default async function handler(req, res) {
                 console.error('Insert error:', insertError);
             } else {
                 isNewVisitor = true;
+                effectiveVisitCount = 1;
             }
         } else if (existingVisitor) {
             // Returning visitor - update visit count and last visit
@@ -115,11 +117,14 @@ export default async function handler(req, res) {
 
             isReturningToday = daysSinceLastVisit === 0;
 
+            // Calculate new visit count BEFORE update
+            effectiveVisitCount = (existingVisitor.visit_count || 0) + 1;
+
             // Update visit record
             const { error: updateError } = await supabase
                 .from('visitors')
                 .update({
-                    visit_count: existingVisitor.visit_count + 1,
+                    visit_count: effectiveVisitCount,  // 🔄 Use the incremented value
                     last_visit: new Date().toISOString(),
                     country: country.substring(0, 100), // Update country in case it changed
                     country_code: countryCode.substring(0, 2)
@@ -172,7 +177,7 @@ export default async function handler(req, res) {
             isNewVisitor,
             isReturningToday,
             daysSinceLastVisit,
-            visitCount: existingVisitor?.visit_count || 1,
+            visitCount: effectiveVisitCount,  // 🔄 Send the correct incremented value
             success: true,
             timestamp: new Date().toISOString()
         });
