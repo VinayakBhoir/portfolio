@@ -3,6 +3,9 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './components/features/Hero';
 import About from './components/features/About';
+import Experience from './components/features/Experience';
+import Publications from './components/features/Publications';
+import Contact from './components/features/Contact';
 import VisitorCounter from './components/features/VisitorCounter';
 import './styles/globals.css';
 
@@ -30,39 +33,15 @@ function App() {
         <main>
           <Hero />
           <About />
+          <Experience />
 
           <Suspense fallback={<SectionLoader />}>
             <Projects />
             <Skills />
           </Suspense>
 
-          {/* Additional sections will be added in next phases */}
-          <section id="experience" className="section-container">
-            <div className="text-center py-20">
-              <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4">
-                Experience Section
-              </h2>
-              <p className="text-[var(--text-secondary)]">Coming in next development phase</p>
-            </div>
-          </section>
-
-          <section id="education" className="section-container">
-            <div className="text-center py-20">
-              <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4">
-                Education Section
-              </h2>
-              <p className="text-[var(--text-secondary)]">Coming in next development phase</p>
-            </div>
-          </section>
-
-          <section id="contact" className="section-container">
-            <div className="text-center py-20">
-              <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-4">
-                Contact Section
-              </h2>
-              <p className="text-[var(--text-secondary)]">Coming in next development phase</p>
-            </div>
-          </section>
+          <Publications />
+          <Contact />
         </main>
 
         <Footer />

@@ -1,5 +1,5 @@
 export const personalInfo = {
-    name: "Vinayak Mangaldas Bhoir",
+    name: "Vinayak Bhoir",
     title: "Full-Stack Developer & AI Researcher",
     subtitle: "B.Tech Graduate specializing in modern web technologies and intelligent systems",
     bio: `Dedicated B.Tech Computer Science graduate with hands-on experience in full-stack development 

@@ -5,7 +5,7 @@ export const navigationItems = [
     { id: 'experience', label: 'Experience', href: '#experience' },
     { id: 'projects', label: 'Projects', href: '#projects' },
     { id: 'skills', label: 'Skills', href: '#skills' },
-    { id: 'education', label: 'Education', href: '#education' },
+    { id: 'publications', label: 'Research', href: '#publications' },
     { id: 'contact', label: 'Contact', href: '#contact' }
 ];
 
