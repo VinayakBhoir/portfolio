@@ -192,7 +192,7 @@ export const AchievementCounter = () => {
                         <div className="text-[var(--text-secondary)] text-xs space-y-1">
                             <div>🕹️ Try the Konami code</div>
                             <div>🎨 Explore all themes</div>
-                            <div>🔄 Visited 11 times</div>  // 🔄 Updated tooltip text to match new description
+                            <div>🔄 Visited 11 times</div>
                         </div>
                     </div>
                     {/* Tooltip arrow pointing up */}

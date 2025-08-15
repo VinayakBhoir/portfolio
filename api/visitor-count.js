@@ -64,10 +64,10 @@ export default async function handler(req, res) {
             }
         }
 
-        // Enhanced geolocation data (FIXED: Correct mapping for country and code)
-        const countryCode = req.headers['x-vercel-ip-country'] || 'XX';  // 🔄 Fixed: ISO-2 country code
-        const region = req.headers['x-vercel-ip-country-region'] || '';
-        const country = req.headers['x-vercel-ip-country'] ? req.headers['x-vercel-ip-country'] : 'Unknown';  // 🔄 Use code for name if needed
+        // Enhanced geolocation data (FIXED: Correct mapping)
+        const countryCode = req.headers['x-vercel-ip-country'] || 'XX';  // 🔄 ISO-2 country code (e.g., 'US')
+        const region = req.headers['x-vercel-ip-country-region'] || '';  // 🔄 Region/state (e.g., 'CA')
+        const country = req.headers['x-vercel-ip-country'] ? req.headers['x-vercel-ip-country'] : 'Unknown';  // 🔄 Full country name if available
         const city = req.headers['x-vercel-ip-city'] || '';
 
         // Enhanced privacy hashing
@@ -86,7 +86,7 @@ export default async function handler(req, res) {
         let isNewVisitor = false;
         let isReturningToday = false;
         let daysSinceLastVisit = 0;
-        let effectiveVisitCount = 1;  // 🔄 New: Track the post-increment value
+        let effectiveVisitCount = 1;
 
         if (!existingVisitor && selectError?.code === 'PGRST116') {
             // New visitor - insert record
@@ -117,14 +117,13 @@ export default async function handler(req, res) {
 
             isReturningToday = daysSinceLastVisit === 0;
 
-            // Calculate new visit count BEFORE update
             effectiveVisitCount = (existingVisitor.visit_count || 0) + 1;
 
             // Update visit record
             const { error: updateError } = await supabase
                 .from('visitors')
                 .update({
-                    visit_count: effectiveVisitCount,  // 🔄 Use the incremented value
+                    visit_count: effectiveVisitCount,
                     last_visit: new Date().toISOString(),
                     country: country.substring(0, 100), // Update country in case it changed
                     country_code: countryCode.substring(0, 2)
