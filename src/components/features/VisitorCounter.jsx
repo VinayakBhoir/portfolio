@@ -42,21 +42,20 @@ const VisitorCounter = () => {
                     return next;
                 });
             }, 50);
-
             return () => clearInterval(timer);
         }
     }, [count, displayCount]);
 
     // Trigger Early Bird achievement
     useEffect(() => {
-        // 🔄 Change this number to set your new trigger limit (e.g., 100 for first 100 visitors)
-        const EARLY_BIRD_LIMIT = 11;
+        // 🔄 Define the constant HERE inside the effect (fixes the ReferenceError)
+        const PERSONAL_VISIT_TRIGGER = 11;  // Change this to your desired trigger value
 
-        // Only unlock if count is valid, within limit, and not already unlocked
+        // Only unlock if visitCount matches trigger and not already unlocked
         if (visitCount === PERSONAL_VISIT_TRIGGER && !unlockedAchievements.has('earlyBird')) {
             unlockAchievement('earlyBird');
         }
-    }, [visitCount, unlockedAchievements, unlockAchievement]);
+    }, [visitCount, unlockedAchievements, unlockAchievement]);  // 🔄 Depends on visitCount
 
     if (loading || !showCounter) {
         return null;
@@ -64,13 +63,11 @@ const VisitorCounter = () => {
 
     const getCountryFlag = (code) => {
         if (code === 'XX' || !code) return '🌍';
-
         try {
             const codePoints = code
                 .toUpperCase()
                 .split('')
                 .map(char => 127397 + char.charCodeAt());
-
             return String.fromCodePoint(...codePoints);
         } catch {
             return '🌍';
@@ -97,7 +94,6 @@ const VisitorCounter = () => {
     const getOrdinalSuffix = (num) => {
         const remainder = num % 100;
         if (remainder >= 11 && remainder <= 13) return 'th';
-
         switch (num % 10) {
             case 1: return 'st';
             case 2: return 'nd';
