@@ -1,13 +1,10 @@
 {
+    "$schema": "https://openapi.vercel.sh/vercel.json",
     "functions": {
         "api/**/*.js": {
             "runtime": "nodejs18.x",
             "maxDuration": 10
         }
-    },
-    "env": {
-        "SUPABASE_URL": "@supabase-url",
-        "SUPABASE_ANON_KEY": "@supabase-anon-key"
     },
     "headers": [
         {
