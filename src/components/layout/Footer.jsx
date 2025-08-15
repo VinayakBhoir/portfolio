@@ -83,7 +83,7 @@ const Footer = () => {
                         © {currentYear} {personalInfo.name}. All rights reserved.
                     </p>
                     <p className="text-[var(--text-muted)] text-sm mt-2 md:mt-0">
-                        Built with React, TailwindCSS & Vercel
+                        Built with &lt;3
                     </p>
                 </div>
             </div>

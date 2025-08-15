@@ -21,13 +21,29 @@
     --border-primary: #333333;
     --border-accent: var(--accent-primary);
 
-    /* Spacing */
-    --section-padding: 5rem;
-    --container-padding: 2rem;
+    /* Spacing Scale */
+    --space-xs: 0.5rem;
+    /* 8px */
+    --space-sm: 0.75rem;
+    /* 12px */
+    --space-md: 1rem;
+    /* 16px */
+    --space-lg: 1.5rem;
+    /* 24px */
+    --space-xl: 2rem;
+    /* 32px */
+    --space-2xl: 3rem;
+    /* 48px */
+    --space-3xl: 4rem;
+    /* 64px */
+
+    /* Legacy spacing for compatibility */
+    --section-padding: var(--space-3xl);
+    --container-padding: var(--space-lg);
 
     /* Transitions */
     --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
+    --transition-normal: 0.2s ease-out;
     --transition-slow: 0.5s ease;
 }
 
@@ -71,12 +87,69 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Typography */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-feature-settings: 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
     background-color: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+}
+
+/* Better font weights and letter spacing */
+.font-display {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+.font-body {
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.7;
+}
+
+.font-accent {
+    font-weight: 500;
+    letter-spacing: -0.005em;
+}
+
+/* Enhanced readability */
+.prose {
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.prose-sm {
+    line-height: 1.6;
+    font-size: 0.875rem;
+}
+
+/* Better heading hierarchy */
+h1,
+.h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+}
+
+h2,
+.h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+h3,
+.h3 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
 }
 
 /* Custom Scrollbar */
@@ -103,13 +176,44 @@ body {
     color: var(--text-primary);
 }
 
-/* Focus Styles */
+/* Focus States */
+.focus-ring {
+    outline: none;
+    transition: box-shadow var(--transition-normal);
+}
+
 .focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent-primary);
+}
+
+.focus-ring:focus:not(.focus-visible) {
+    box-shadow: none;
+}
+
+/* Better link focus states */
+a:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Form elements focus */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-primary)/20;
+}
+
+/* Button focus states */
+button:focus-visible {
     outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
 }
 
-/* Animations */
+/* Core Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -245,7 +349,7 @@ body {
     }
 }
 
-/* Enhanced glow animation */
+/* glow animation */
 @keyframes enhancedGlow {
 
     0%,
@@ -258,7 +362,31 @@ body {
     }
 }
 
-/* Utility classes */
+/* Loading Skeleton Animation (NEW) */
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200px 0;
+    }
+
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+/* Utility Classes */
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* ✅ VISITOR COUNTER UTILITIES (RESTORED) */
 .animate-slideInUp {
     animation: slideInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -277,4 +405,236 @@ body {
 
 .animate-enhancedGlow {
     animation: enhancedGlow 2s ease-in-out infinite;
+}
+
+/* Enhanced Effects */
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glass-effect {
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-primary);
+}
+
+/* Loading skeleton utility */
+.skeleton {
+    background: linear-gradient(90deg, var(--border-primary)/20 25%, var(--border-primary)/10 37%, var(--border-primary)/20 63%);
+    background-size: 400px 100%;
+    animation: skeleton-loading 1.4s ease-in-out infinite;
+}
+
+/* Enhanced Section Styling */
+.section-container {
+    padding: var(--space-3xl) var(--space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Enhanced Card Hover Effects (NEW) */
+.card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+}
+
+.card-hover:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 40px var(--accent-glow)/10;
+}
+
+/* Better Button States (NEW) */
+.btn-enhance {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+}
+
+.btn-enhance:hover {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.btn-enhance:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 0.1s;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    :root {
+        --space-3xl: 2.5rem;
+        --space-2xl: 2rem;
+        --section-padding: var(--space-2xl);
+        --container-padding: var(--space-md);
+    }
+
+    .section-container {
+        padding: var(--space-2xl) var(--space-md);
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    /* Touch-friendly interactions */
+    .btn,
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav-link {
+        padding: 12px 16px;
+    }
+}
+
+/* Accessibility Features */
+@media (prefers-contrast: high) {
+    :root {
+        --text-secondary: #e5e5e5;
+        --border-primary: #555555;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    * {
+        background: white !important;
+        color: black !important;
+    }
+
+    .section-container {
+        padding: 1rem 0;
+        margin: 0;
+        max-width: none;
+    }
+}
+
+/* Enhanced Card Hover Effects with Glow */
+.card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--border-primary)/40;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: var(--accent-primary)/60;
+    box-shadow:
+        0 10px 40px var(--accent-glow)/15,
+        0 0 0 1px var(--accent-primary)/20,
+        0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Project Cards Specific Hover */
+.project-card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--border-primary)/40;
+}
+
+.project-card-hover:hover {
+    transform: translateY(-6px) scale(1.03);
+    border-color: var(--accent-primary);
+    box-shadow:
+        0 15px 50px var(--accent-glow)/20,
+        0 0 20px var(--accent-glow)/30,
+        0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Skill Cards Hover */
+.skill-card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--border-primary)/40;
+}
+
+.skill-card-hover:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: var(--accent-primary)/70;
+    box-shadow:
+        0 8px 25px var(--accent-glow)/12,
+        0 0 15px var(--accent-glow)/20;
+}
+
+/* Experience Timeline Card Hover */
+.experience-card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--border-primary)/40;
+}
+
+.experience-card-hover:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-primary)/80;
+    box-shadow:
+        0 12px 35px var(--accent-glow)/15,
+        0 0 25px var(--accent-glow)/10;
+}
+
+/* Publication Card Hover */
+.publication-card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--accent-primary)/20;
+}
+
+.publication-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow:
+        0 15px 45px var(--accent-glow)/20,
+        0 0 30px var(--accent-glow)/25;
+}
+
+/* Contact Card Hover */
+.contact-card-hover {
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    border: 1px solid var(--border-primary)/40;
+}
+
+.contact-card-hover:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary)/60;
+    box-shadow:
+        0 10px 30px var(--accent-glow)/15,
+        0 0 20px var(--accent-glow)/20;
+}
+
+/* Button Hover Glow Effects */
+.btn-glow:hover {
+    box-shadow:
+        0 0 20px var(--accent-glow)/40,
+        0 4px 15px var(--accent-glow)/20;
+}
+
+/* Navigation Link Hover */
+.nav-link-hover:hover {
+    color: var(--accent-primary);
+    text-shadow: 0 0 8px var(--accent-glow)/50;
+}
+
+/* Theme Selector Hover */
+.theme-option:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px var(--accent-glow)/60;
 }
